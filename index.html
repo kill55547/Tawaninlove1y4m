@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Anniversary เนม ❤️ ตะวัน</title>
-    <!-- Google Fonts: Cute & Handwritten Style -->
     <link href="https://fonts.googleapis.com/css2?family=Itim&family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -30,9 +29,58 @@
             position: relative;
         }
 
-        /* --- Background Effects --- */
+        /* === PASSWORD GATE === */
+        .password-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 10, 0.98); z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 2rem; text-align: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        .password-overlay.gate-open {
+            opacity: 0; visibility: hidden; pointer-events: none;
+        }
+        .password-box {
+            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 105, 180, 0.4); border-radius: 24px;
+            padding: 2.5rem 2rem; max-width: 420px; width: 100%;
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.25);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .password-box h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .password-box p { font-size: 1rem; opacity: 0.85; margin-bottom: 1.5rem; }
+        .password-input {
+            width: 100%; padding: 1rem 1.2rem; border-radius: 50px; 
+            border: 2px solid rgba(255,105,180,0.3);
+            background: rgba(255,255,255,0.07); color: #fff; font-size: 1.1rem; 
+            font-family: var(--font-main); text-align: center; outline: none; 
+            transition: border-color 0.3s, box-shadow 0.3s; margin-bottom: 1rem;
+        }
+        .password-input:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 20px rgba(255,105,180,0.3);
+        }
+        .password-input.shake {
+            animation: shakeInput 0.5s ease;
+            border-color: #ff4466;
+        }
+        @keyframes shakeInput {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+        .password-error {
+            color: #ff6b8a; font-family: var(--font-cute); font-size: 1.1rem;
+            min-height: 1.5rem; margin-bottom: 0.5rem; opacity: 0; transition: opacity 0.3s;
+        }
+        .password-error.show { opacity: 1; }
+
+        /* === BACKGROUND EFFECTS === */
         .stars-container, .hearts-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            pointer-events: none; z-index: 0; overflow: hidden;
         }
         .star { position: absolute; background: white; border-radius: 50%; animation: twinkle infinite ease-in-out; }
         .floating-heart { position: absolute; color: var(--primary-pink); opacity: 0.6; animation: floatUp linear infinite; font-size: 1.5rem; }
@@ -40,7 +88,7 @@
         @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
         @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
-        /* --- Layout & Sections --- */
+        /* === LAYOUT & SECTIONS === */
         section {
             min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             padding: 2rem; position: relative; z-index: 1; text-align: center;
@@ -53,7 +101,7 @@
         h1 { font-size: 2.5rem; }
         p { font-size: 1.2rem; line-height: 1.8; margin-bottom: 1.5rem; max-width: 600px; }
 
-        /* --- Glassmorphism Cards & Buttons --- */
+        /* === GLASSMORPHISM & BUTTONS === */
         .glass-card {
             background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 105, 180, 0.3); border-radius: 20px; padding: 2rem;
@@ -68,53 +116,47 @@
         }
         button:active { transform: scale(0.95); }
 
-        /* --- Specific Section Styles --- */
-        /* Music */
+        /* === MUSIC === */
         .music-wrapper { width: 100%; max-width: 500px; border-radius: 15px; overflow: hidden; margin-top: 1rem; box-shadow: 0 0 20px var(--glow-pink); }
         .music-wrapper iframe { width: 100%; aspect-ratio: 16/9; border: none; }
 
-        /* Quiz Options */
+        /* === QUIZ OPTIONS === */
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; max-width: 400px; }
         .option-btn { background: rgba(255,255,255,0.1); border: 1px solid var(--soft-pink); font-size: 1rem; padding: 0.8rem; }
         
-        /* Love Cards */
+        /* === LOVE CARDS === */
         .love-cards { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-        .love-card { 
-            width: 140px; height: 180px; perspective: 1000px; cursor: pointer; 
-        }
+        .love-card { width: 140px; height: 180px; perspective: 1000px; cursor: pointer; }
         .love-card-inner { 
-            position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; 
-            border-radius: 15px; box-shadow: 0 0 15px rgba(255,105,180,0.2);
+            position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; 
+            transform-style: preserve-3d; border-radius: 15px; box-shadow: 0 0 15px rgba(255,105,180,0.2);
         }
         .love-card.flipped .love-card-inner { transform: rotateY(180deg); }
         .love-card-front, .love-card-back { 
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; 
-            display: flex; align-items: center; justify-content: center; font-size: 3rem; background: var(--glass-bg); border: 1px solid var(--soft-pink);
+            display: flex; align-items: center; justify-content: center; font-size: 3rem; 
+            background: var(--glass-bg); border: 1px solid var(--soft-pink);
         }
         .love-card-back { transform: rotateY(180deg); font-size: 1.2rem; padding: 0.5rem; color: var(--soft-pink); font-family: var(--font-cute); }
 
-        /* Heart Hunt Game */
+        /* === HEART HUNT === */
         #heart-hunt-area { position: relative; width: 100%; height: 60vh; max-width: 600px; border: 2px dashed var(--soft-pink); border-radius: 20px; overflow: hidden; margin-bottom: 1rem; }
-        .hunt-heart { 
-            position: absolute; font-size: 2rem; cursor: pointer; animation: popIn 0.3s ease-out; user-select: none; 
-        }
+        .hunt-heart { position: absolute; font-size: 2rem; cursor: pointer; animation: popIn 0.3s ease-out; user-select: none; }
         @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
 
-        /* Letter */
+        /* === LETTER === */
         .envelope { font-size: 5rem; cursor: pointer; animation: bounce 2s infinite; margin-bottom: 1rem; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         .letter-content { font-family: var(--font-cute); white-space: pre-line; font-size: 1.3rem; color: var(--soft-pink); min-height: 200px; }
 
-        /* Timeline */
+        /* === TIMELINE === */
         .timeline { position: relative; max-width: 500px; width: 100%; padding-left: 20px; border-left: 3px solid var(--primary-pink); }
         .timeline-item { margin-bottom: 2rem; position: relative; padding-left: 20px; opacity: 0; transform: translateX(-20px); transition: all 0.6s ease; }
         .timeline-item.show { opacity: 1; transform: translateX(0); }
-        .timeline-item::before { 
-            content: '💖'; position: absolute; left: -32px; top: 0; font-size: 1.2rem; 
-        }
+        .timeline-item::before { content: '💖'; position: absolute; left: -32px; top: 0; font-size: 1.2rem; }
         .timeline-date { color: var(--primary-pink); font-weight: bold; font-size: 0.9rem; }
 
-        /* Find Name Game */
+        /* === FIND NAME === */
         .ghibli-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 350px; }
         .ghibli-card { 
             aspect-ratio: 1; background: var(--glass-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; 
@@ -123,14 +165,14 @@
         .ghibli-card.found { background: var(--primary-pink); border-color: white; animation: pulse 0.5s; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* Confession */
-        .confession-text { font-size: 2rem; font-family: var(--font-cute); min-height: 80px; }
+        /* === CONFESSION === */
+        .confession-text { font-size: 2rem; font-family: var(--font-cute); min-height: 80px; transition: opacity 0.3s; }
 
-        /* Impossible Button */
-        #no-btn-container { position: relative; width: 100%; height: 100px; display: flex; justify-content: center; align-items: center; }
+        /* === IMPOSSIBLE BUTTON === */
+        #no-btn-container { position: relative; width: 100%; height: 100px; display: flex; justify-content: center; align-items: center; overflow: visible; }
         #no-btn { transition: all 0.2s ease; white-space: nowrap; }
 
-        /* Ghibli Moment */
+        /* === GHIBLI MOMENT === */
         .ghibli-scene { 
             width: 100%; max-width: 500px; aspect-ratio: 16/9; background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); 
             border-radius: 20px; position: relative; overflow: hidden; margin-bottom: 1rem; border: 2px solid var(--soft-pink);
@@ -139,13 +181,13 @@
         @keyframes sakuraFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(300px) rotate(360deg); opacity: 0; } }
         .ghibli-characters { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 3rem; display: flex; gap: 10px; }
 
-        /* Counter */
+        /* === COUNTER === */
         .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 400px; margin: 1rem auto; }
         .counter-item { background: var(--glass-bg); padding: 10px; border-radius: 10px; border: 1px solid var(--soft-pink); }
         .counter-num { font-size: 1.8rem; font-weight: bold; color: var(--primary-pink); font-family: var(--font-cute); }
         .counter-label { font-size: 0.8rem; opacity: 0.8; }
 
-        /* Easter Egg */
+        /* === EASTER EGG === */
         .secret-heart { position: fixed; bottom: 10px; right: 10px; font-size: 1rem; opacity: 0.2; cursor: pointer; z-index: 100; transition: opacity 0.3s; }
         .secret-modal { 
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); 
@@ -154,21 +196,32 @@
         }
         .secret-modal.show { transform: translate(-50%, -50%) scale(1); }
 
-        /* Utility */
+        /* === UTILITY === */
         .fade-in-up { animation: fadeInUp 0.8s ease forwards; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Mobile Optimization */
         @media (max-width: 768px) {
             h1 { font-size: 2rem; }
             .options-grid { grid-template-columns: 1fr; }
             .counter-grid { grid-template-columns: repeat(2, 1fr); }
+            .password-box { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Effects -->
+    <!-- 🔐 PASSWORD GATE -->
+    <div class="password-overlay" id="password-gate">
+        <div class="password-box">
+            <h2>แกใช่เนมไหม? 💕</h2>
+            <p>ใส่รหัสลับเพื่อเข้าสู่โลกของเรา...</p>
+            <div class="password-error" id="pwd-error">แก ไม่มีสิทธิ์! 😤</div>
+            <input type="text" class="password-input" id="pwd-input" placeholder="พิมพ์รหัสที่นี่..." autocomplete="off">
+            <button onclick="checkPassword()">เปิดเลย 💖</button>
+        </div>
+    </div>
+
+    <!-- BACKGROUND EFFECTS -->
     <div class="stars-container" id="stars"></div>
     <div class="hearts-container" id="bg-hearts"></div>
 
@@ -328,13 +381,74 @@
     </div>
 
     <script>
-        // === CONFIGURATION ===
+        // =============================================
+        // 🔐 PASSWORD GATE SYSTEM
+        // =============================================
+        const CORRECT_PASSWORD = 'ตะวันสุดหล่อ';
+        
+        function checkPassword() {
+            const input = document.getElementById('pwd-input');
+            const error = document.getElementById('pwd-error');
+            const gate = document.getElementById('password-gate');
+            
+            if (input.value.trim() === CORRECT_PASSWORD) {
+                // Correct! Open the gate with beautiful animation
+                error.classList.remove('show');
+                gate.classList.add('gate-open');
+                
+                // Spawn celebration hearts
+                for(let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.textContent = '💖';
+                        heart.style.cssText = `
+                            position:fixed; left:50%; top:50%; font-size:${Math.random()*2+1}rem; 
+                            pointer-events:none; z-index:10000; transition: all 1s ease-out; opacity:1;
+                        `;
+                        document.body.appendChild(heart);
+                        requestAnimationFrame(() => {
+                            const angle = (Math.PI * 2 * i) / 20;
+                            const dist = Math.random() * 250 + 100;
+                            heart.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`;
+                            heart.style.opacity = '0';
+                        });
+                        setTimeout(() => heart.remove(), 1000);
+                    }, i * 50);
+                }
+                
+                // Initialize background effects after gate opens
+                setTimeout(() => {
+                    createStars();
+                    createFloatingHearts();
+                }, 400);
+                
+            } else {
+                // Wrong password!
+                error.textContent = 'แก ไม่มีสิทธิ์! 😤';
+                error.classList.add('show');
+                input.classList.add('shake');
+                input.value = '';
+                setTimeout(() => input.classList.remove('shake'), 500);
+            }
+        }
+
+        // Allow Enter key to submit password
+        document.getElementById('pwd-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // =============================================
+        // CONFIGURATION
+        // =============================================
         const START_DATE = new Date('2025-04-25T00:00:00');
         const YOUTUBE_ID = '3aCctY3DGac';
         
-        // === BACKGROUND EFFECTS ===
+        // =============================================
+        // BACKGROUND EFFECTS
+        // =============================================
         function createStars() {
             const container = document.getElementById('stars');
+            if(container.children.length > 0) return; // Prevent duplicate
             for(let i=0; i<80; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -364,7 +478,9 @@
             }, 800);
         }
 
-        // === NAVIGATION ===
+        // =============================================
+        // NAVIGATION
+        // =============================================
         let currentSection = 'sec-welcome';
         
         function nextSection(sectionId) {
@@ -388,9 +504,10 @@
             if(id === 'sec-ending') startCounter();
         }
 
-        // === SECTION 1: WELCOME ===
+        // =============================================
+        // SECTION 1: WELCOME
+        // =============================================
         function startExperience() {
-            // Heart explosion effect
             for(let i=0; i<30; i++) {
                 const heart = document.createElement('div');
                 heart.textContent = '💖';
@@ -408,25 +525,19 @@
                 setTimeout(() => heart.remove(), 1000);
             }
             
-            // Inject YouTube embed for next section
             setTimeout(() => {
-                const musicHTML = `
+                const overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;';
+                overlay.innerHTML = `
                     <p style="font-family:var(--font-cute); color:var(--soft-pink); margin-bottom:0.5rem;">บี๋ๆ เปิดเพลงก่อนน้าาา 💕</p>
                     <div class="music-wrapper">
                         <iframe src="https://www.youtube.com/embed/${YOUTUBE_ID}?autoplay=1&loop=1&playlist=${YOUTUBE_ID}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </div>
-                    <button style="margin-top:1.5rem;" onclick="nextSection('sec-checkpoint')">พร้อมแล้ว 💖</button>
+                    <button style="margin-top:1.5rem;" id="music-ready-btn">พร้อมแล้ว 💖</button>
                 `;
-                const sec = document.getElementById('sec-checkpoint');
-                // Prepend music to checkpoint section or create separate flow
-                // For simplicity, we'll add it as a modal overlay first
-                const overlay = document.createElement('div');
-                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;';
-                overlay.innerHTML = musicHTML;
                 document.body.appendChild(overlay);
                 
-                // Override the button in overlay to proceed
-                overlay.querySelector('button').onclick = () => {
+                overlay.querySelector('#music-ready-btn').onclick = () => {
                     overlay.style.opacity = '0';
                     overlay.style.transition = 'opacity 0.5s';
                     setTimeout(() => { overlay.remove(); nextSection('sec-checkpoint'); }, 500);
@@ -434,7 +545,9 @@
             }, 500);
         }
 
-        // === SECTION 2: CHECKPOINT ===
+        // =============================================
+        // SECTION 2: CHECKPOINT
+        // =============================================
         const wrongPhrases = ["ไม่ใช่eee!", "คิดใหม่!", "ผิดจ้า!", "ลองอีกครั้งนะบี๋ๆ!", "แมวที่ไหน!", "หมูปิ้งก็ไม่ใช่!"];
         let checkpointAttempts = 0;
         
@@ -445,7 +558,6 @@
             btn.style.pointerEvents = 'none';
             checkpointAttempts++;
             if(checkpointAttempts >= 3) {
-                // Allow any remaining "ตะวัน" button to work easily
                 document.querySelectorAll('.option-btn').forEach(b => {
                     if(b.textContent.includes('ตะวัน') && b.style.opacity !== '0.3') {
                         b.style.boxShadow = '0 0 20px var(--primary-pink)';
@@ -460,7 +572,9 @@
             setTimeout(() => nextSection('sec-quiz'), 1200);
         }
 
-        // === SECTION 3: QUIZ ===
+        // =============================================
+        // SECTION 3: QUIZ
+        // =============================================
         function wrongQuiz() {
             document.getElementById('quiz-msg').textContent = "นับใหม่น้าาา 🥺";
         }
@@ -469,7 +583,9 @@
             setTimeout(() => nextSection('sec-love-things'), 1200);
         }
 
-        // === SECTION 4: LOVE THINGS ===
+        // =============================================
+        // SECTION 4: LOVE THINGS
+        // =============================================
         let flippedCount = 0;
         function flipCard(card) {
             if(card.classList.contains('flipped')) return;
@@ -483,14 +599,15 @@
             }
         }
 
-        // === SECTION 5: HEART HUNT ===
+        // =============================================
+        // SECTION 5: HEART HUNT
+        // =============================================
         let heartsCaught = 0;
         function initHeartHunt() {
             const area = document.getElementById('heart-hunt-area');
             area.innerHTML = '';
             heartsCaught = 0;
             document.getElementById('hearts-left').textContent = '20';
-            
             for(let i=0; i<20; i++) {
                 setTimeout(() => spawnHeart(area), i * 300);
             }
@@ -514,7 +631,9 @@
             area.appendChild(heart);
         }
 
-        // === SECTION 6: LETTER ===
+        // =============================================
+        // SECTION 6: LETTER
+        // =============================================
         const LETTER_TEXT = `ถึงบี๋ๆ 💕
 
 ขอบคุณที่อยู่กับเค้ามา 1 ปี 4 เดือนแล้วนะ
@@ -551,7 +670,9 @@
             }, 40);
         }
 
-        // === SECTION 7: TIMELINE ===
+        // =============================================
+        // SECTION 7: TIMELINE
+        // =============================================
         function initTimeline() {
             const items = document.querySelectorAll('.timeline-item');
             items.forEach((item, i) => {
@@ -562,15 +683,15 @@
             }, 1500);
         }
 
-        // === SECTION 8: FIND NAME ===
+        // =============================================
+        // SECTION 8: FIND NAME
+        // =============================================
         function initFindName() {
             const grid = document.getElementById('find-name-grid');
             const emojis = ['🌸','🐱','🌙','⭐','🎀','🍰','🧸','🦋'];
             const cells = [];
-            // Fill 9 cells, one is "เนม"
             for(let i=0; i<8; i++) cells.push({type:'emoji', val: emojis[i % emojis.length]});
             cells.push({type:'name', val:'เนม'});
-            // Shuffle
             cells.sort(() => Math.random() - 0.5);
             
             grid.innerHTML = '';
@@ -592,7 +713,9 @@
             });
         }
 
-        // === SECTION 9: CONFESSION ===
+        // =============================================
+        // SECTION 9: CONFESSION
+        // =============================================
         const confessions = ["เค้าคิดถึงเธอบ่อยนะ", "มากด้วย", "มากมากด้วย", "มากมากมากด้วย", "มากที่สุดเลย 💕"];
         let confessionIdx = 0;
         function nextConfession() {
@@ -606,7 +729,6 @@
             setTimeout(() => {
                 display.textContent = confessions[confessionIdx];
                 display.style.opacity = '1';
-                display.style.transition = 'opacity 0.5s';
             }, 300);
             
             if(confessionIdx === confessions.length - 1) {
@@ -614,7 +736,9 @@
             }
         }
 
-        // === SECTION 10: IMPOSSIBLE BUTTON ===
+        // =============================================
+        // SECTION 10: IMPOSSIBLE BUTTON
+        // =============================================
         const noTexts = ["เดี๋ยวก่อนนนน", "คิดดีแล้วหรอ 🥺", "รักเค้าน้าาา", "รักเค้าน้าาาาาา", "รักเค้าน้าาาาาาาาา", "รักเค้าน้าาาาาาาาาาาาาา"];
         let noAttempt = 0;
         
@@ -624,15 +748,12 @@
                 btn.style.display = 'none';
                 return;
             }
-            
             btn.textContent = noTexts[noAttempt];
             noAttempt++;
             
-            // Random position within container
             const container = document.getElementById('no-btn-container');
             const maxX = container.offsetWidth - btn.offsetWidth;
-            const maxY = 60; // Allow some vertical movement
-            
+            const maxY = 60;
             const newX = Math.random() * maxX - maxX/2;
             const newY = Math.random() * maxY - maxY/2;
             const rot = Math.random() * 40 - 20;
@@ -646,7 +767,9 @@
             nextSection('sec-ghibli');
         }
 
-        // === SECTION 11: GHIBLI SCENE ===
+        // =============================================
+        // SECTION 11: GHIBLI SCENE
+        // =============================================
         function initGhibliScene() {
             const scene = document.getElementById('ghibli-scene');
             setInterval(() => {
@@ -662,7 +785,9 @@
             }, 400);
         }
 
-        // === SECTION 12: LIVE COUNTER ===
+        // =============================================
+        // SECTION 12: LIVE COUNTER
+        // =============================================
         function startCounter() {
             function update() {
                 const now = new Date();
@@ -694,14 +819,15 @@
             setInterval(update, 1000);
         }
 
-        // === EASTER EGG ===
+        // =============================================
+        // EASTER EGG
+        // =============================================
         let secretTaps = 0;
         function tapSecret() {
             secretTaps++;
             if(secretTaps >= 5) {
                 document.getElementById('secret-modal').classList.add('show');
                 secretTaps = 0;
-                // Spawn extra hearts
                 for(let i=0; i<10; i++) {
                     const h = document.createElement('div');
                     h.className = 'floating-heart';
@@ -713,11 +839,8 @@
             }
         }
 
-        // === INITIALIZATION ===
-        window.onload = () => {
-            createStars();
-            createFloatingHearts();
-        };
+        // Note: Background effects are initialized AFTER password gate opens
+        // See checkPassword() function above
     </script>
 </body>
 </html>
